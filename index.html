@@ -816,21 +816,67 @@
 
     /* ── LOCATION CALLOUT ── */
     .location-callout {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px;
-      padding: 1.2rem 1.4rem;
       margin-top: 2rem;
       max-width: 500px;
       margin-left: auto;
       margin-right: auto;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .location-map-wrap {
+      position: relative;
+      height: 200px;
+    }
+    .location-map-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      filter: saturate(0.5) brightness(0.85);
+    }
+    /* Spotlight overlay — dims edges, highlights DMV center */
+    .location-map-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 38% 42% at 46% 52%,
+        transparent 0%,
+        transparent 55%,
+        rgba(28,43,74,0.55) 85%,
+        rgba(28,43,74,0.82) 100%
+      );
+      pointer-events: none;
+      border-radius: 0;
+    }
+    .location-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .location-text {
+      background: rgba(255,255,255,0.06);
+      padding: 1rem 1.2rem;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
       text-align: left;
     }
-    .location-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1.4; }
-    .location-text { font-family: var(--sans); font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
     .location-text strong { color: #fff; }
 
     /* ── FOOTER ── */
@@ -1020,7 +1066,7 @@
     <a class="nav-logo" href="#">College Essay Man</a>
     <div class="nav-links">
       <a class="nav-link" href="#about">About Matt</a>
-      <a class="nav-link" href="#videos">Watch Matt</a>
+      <a class="nav-link" href="#videos">TikToks</a>
       <a class="nav-link" href="#testimonials">Reviews</a>
       <a class="nav-cta" href="#contact">Schedule a Free Consultation</a>
     </div>
@@ -1030,7 +1076,7 @@
 <!-- SECTION TAB BAR (mobile only) -->
 <div class="section-tabs" id="section-tabs">
   <a class="section-tab" href="#the-ai-question">The Case</a>
-  <a class="section-tab" href="#videos">Watch</a>
+  <a class="section-tab" href="#videos">TikToks</a>
   <a class="section-tab" href="#about">About</a>
   <a class="section-tab" href="#testimonials">Reviews</a>
   <a class="section-tab" href="#faq">FAQ</a>
@@ -1480,7 +1526,7 @@
       Matt offers a free consultation — a quick call to hear where you or your student are in the process and answer any questions. Send a message below, email directly, or call or text anytime.
     </p>
 
-    <form class="contact-form" action="https://formsubmit.co/matt@collegeessayman.com" method="POST">
+    <form class="contact-form" action="https://formsubmit.co/matthew.s.schwartz@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="New inquiry — College Essay Man" />
       <input type="hidden" name="_next" value="https://collegeessayman.com" />
       <input type="hidden" name="_captcha" value="false" />
@@ -1498,9 +1544,16 @@
     </p>
 
     <div class="location-callout">
-      <span class="location-icon">📍</span>
+      <div class="location-map-wrap">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-78.0,38.55,-76.3,39.35&layer=mapnik"
+          scrolling="no"
+          title="Washington DC metro area map"
+        ></iframe>
+        <span class="location-label">📍 Washington, DC metro area</span>
+      </div>
       <div class="location-text">
-        <strong>Based in Washington, DC.</strong> Available for in-person sessions in the DC, Northern Virginia, and Maryland area. Works remotely with students everywhere — FaceTime, Zoom, or Google Meet. Matt has worked with students across the country.
+        <strong>In-person</strong> in DC, Northern Virginia, and Maryland. <strong>Remote</strong> with students anywhere — Matt has worked with applicants across the country over FaceTime, Zoom, and Google Meet.
       </div>
     </div>
   </div>
