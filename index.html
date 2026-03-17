@@ -778,6 +778,61 @@
       color: rgba(255,255,255,0.45);
     }
 
+    /* ── SCROLL OFFSET for sticky nav + tab bar ── */
+    [id] { scroll-margin-top: 80px; }
+    @media (max-width: 639px) { [id] { scroll-margin-top: 106px; } }
+
+    /* ── CONTACT FORM ── */
+    .contact-form {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 5px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 0.97rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: var(--accent); }
+    .contact-form textarea { min-height: 110px; resize: vertical; }
+    .contact-form .btn-primary { width: 100%; text-align: center; margin-top: 0.25rem; }
+
+    /* ── LOCATION CALLOUT ── */
+    .location-callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 1.2rem 1.4rem;
+      margin-top: 2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+    .location-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1.4; }
+    .location-text { font-family: var(--sans); font-size: 0.9rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+    .location-text strong { color: #fff; }
+
     /* ── FOOTER ── */
     footer {
       background: #111;
@@ -975,7 +1030,7 @@
 <!-- SECTION TAB BAR (mobile only) -->
 <div class="section-tabs" id="section-tabs">
   <a class="section-tab" href="#the-ai-question">The Case</a>
-  <a class="section-tab" href="#videos">Videos</a>
+  <a class="section-tab" href="#videos">Watch</a>
   <a class="section-tab" href="#about">About</a>
   <a class="section-tab" href="#testimonials">Reviews</a>
   <a class="section-tab" href="#faq">FAQ</a>
@@ -1422,15 +1477,32 @@
     <p class="section-label">Get started</p>
     <h2>Let's figure out what your essay is actually about.</h2>
     <p>
-      Matt offers a free consultation — a quick phone call to hear where you or your student are in the process, walk through how he works, and answer any questions. It's brief, it's low-pressure, and there's no obligation.
+      Matt offers a free consultation — a quick call to hear where you or your student are in the process and answer any questions. Send a message below, email directly, or call or text anytime.
     </p>
-    <p style="margin-top: 0.5rem;">
-      Sessions are available over FaceTime, Zoom, or Google Meet from anywhere, and in person if you're in the Washington, DC area. You'll hear back from Matt directly within 24 hours of reaching out.
+
+    <form class="contact-form" action="https://formsubmit.co/matt@collegeessayman.com" method="POST">
+      <input type="hidden" name="_subject" value="New inquiry — College Essay Man" />
+      <input type="hidden" name="_next" value="https://collegeessayman.com" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="text" name="name" placeholder="Your name" required />
+      <input type="email" name="email" placeholder="Email address" required />
+      <input type="tel" name="phone" placeholder="Phone number (optional)" />
+      <textarea name="message" placeholder="Tell me a little about where you are in the process — school year, target schools, deadline, whatever's relevant." required></textarea>
+      <button type="submit" class="btn-primary">Send Message</button>
+    </form>
+
+    <p class="contact-email" style="margin-top:1.5rem;">
+      <a href="mailto:matt@collegeessayman.com">matt@collegeessayman.com</a>
+      &nbsp;&middot;&nbsp;
+      <a href="tel:+12028105338">(202) 810-5338</a> — call or text
     </p>
-    <a class="btn-primary" href="mailto:matt@collegeessayman.com">Schedule a Free Consultation</a>
-    <p class="contact-email">
-      Or email directly: <a href="mailto:matt@collegeessayman.com">matt@collegeessayman.com</a>
-    </p>
+
+    <div class="location-callout">
+      <span class="location-icon">📍</span>
+      <div class="location-text">
+        <strong>Based in Washington, DC.</strong> Available for in-person sessions in the DC, Northern Virginia, and Maryland area. Works remotely with students everywhere — FaceTime, Zoom, or Google Meet. Matt has worked with students across the country.
+      </div>
+    </div>
   </div>
 </section>
 
