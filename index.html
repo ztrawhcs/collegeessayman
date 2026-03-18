@@ -92,9 +92,9 @@
     }
     .hero-eyebrow {
       font-family: var(--sans);
-      font-size: 0.72rem;
+      font-size: 0.85rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 1.2rem;
@@ -117,6 +117,13 @@
       max-width: 540px;
       margin: 0 auto 1.6rem;
       line-height: 1.6;
+    }
+
+    .hero-rule {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      margin: 1.8rem auto;
+      max-width: 540px;
     }
 
     /* Trust bar — shows before CTA */
@@ -189,14 +196,15 @@
     /* Mini testimonial right below hero CTA */
     .hero-mini-testimonial {
       font-family: var(--sans);
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.6);
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.75);
       font-style: italic;
-      max-width: 440px;
+      max-width: 560px;
       margin: 0 auto;
+      line-height: 1.65;
     }
     .hero-mini-testimonial strong {
-      color: rgba(255,255,255,0.8);
+      color: rgba(255,255,255,0.9);
       font-style: normal;
     }
 
@@ -1091,6 +1099,8 @@
     It's a fair question. Here's the honest answer — and why it matters more than you think.
   </p>
 
+  <hr class="hero-rule" />
+
   <!-- Trust signals ABOVE the CTA -->
   <div class="hero-trust-bar">
     <div class="trust-item">
@@ -1115,6 +1125,8 @@
     <a class="btn-primary" href="#contact">Schedule a Free Consultation</a>
     <a class="btn-secondary" href="#the-ai-question">Read the argument &#8594;</a>
   </div>
+
+  <hr class="hero-rule" />
 
   <!-- Single powerful social nudge directly under CTAs -->
   <p class="hero-mini-testimonial">
@@ -1325,7 +1337,7 @@
         <p class="section-label">About Matt</p>
         <h2>A journalist. A lawyer. A dad who finds this work genuinely meaningful.</h2>
         <p>
-          My name is Matt Schwartz. By day I'm a journalist at Bloomberg Law, where I've spent years
+          My name is Matt Schwartz. By day I'm a journalist at Bloomberg Law — before that, I spent years at NPR —
           making complex legal stories readable and human. I'm also a Georgetown University Law Center
           graduate and have won top national prizes for feature writing.
         </p>
@@ -1341,7 +1353,7 @@
 
         <ul class="about-credentials">
           <li>Georgetown University Law Center — J.D.</li>
-          <li>Bloomberg Law journalist — 10+ years covering law and policy</li>
+          <li>National journalist — NPR, then Bloomberg Law</li>
           <li>Edward R. Murrow Award for best feature reporting</li>
           <li>American Bar Association Silver Gavel Award for Media and the Arts</li>
           <li>10+ years college &amp; graduate school essay consulting</li>
