@@ -945,7 +945,7 @@
 
     /* ── SCROLL OFFSET for sticky nav + tab bar ── */
     [id] { scroll-margin-top: 80px; }
-    @media (max-width: 639px) { [id] { scroll-margin-top: 106px; } }
+    @media (max-width: 639px) { [id] { scroll-margin-top: 128px; } }
 
     /* ── CONTACT FORM ── */
     .contact-form {
@@ -1061,22 +1061,22 @@
     @media (max-width: 639px) {
       .section-tabs {
         display: flex;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
+        flex-wrap: wrap;
+        justify-content: center;
         background: #fff;
         border-bottom: 2px solid var(--border);
         position: sticky;
         top: 50px;
         z-index: 90;
         gap: 0;
+        padding: 0.15rem 0.25rem 0;
       }
       .section-tabs::-webkit-scrollbar { display: none; }
       .section-tab {
         flex: 0 0 auto;
-        padding: 0.75rem 1.1rem;
+        padding: 0.5rem 0.72rem;
         font-family: var(--sans);
-        font-size: 0.82rem;
+        font-size: 0.78rem;
         font-weight: 600;
         color: var(--muted);
         text-decoration: none;
@@ -1837,16 +1837,23 @@
   // Section tab active state on scroll
   (function() {
     var tabs = document.querySelectorAll('.section-tab');
-    var sections = ['the-ai-question','videos','about','testimonials','faq','contact'];
-    function updateActive() {
-      var scrollY = window.scrollY + 120;
-      var active = sections[0];
-      sections.forEach(function(id) {
-        var el = document.getElementById(id);
-        if (el && el.offsetTop <= scrollY) active = id;
-      });
+    // Derived from the tabs themselves and sorted by position, so reordering
+    // sections in the HTML cannot desync this list again.
+    function targets() {
+      var out = [];
       tabs.forEach(function(t) {
-        t.classList.toggle('active', t.getAttribute('href') === '#' + active);
+        var id = (t.getAttribute('href') || '').replace('#', '');
+        var el = id && document.getElementById(id);
+        if (el) out.push({ id: id, top: el.getBoundingClientRect().top + window.scrollY });
+      });
+      return out.sort(function(a, b) { return a.top - b.top; });
+    }
+    function updateActive() {
+      var y = window.scrollY + 140;
+      var active = null;
+      targets().forEach(function(s) { if (s.top <= y) active = s.id; });
+      tabs.forEach(function(t) {
+        t.classList.toggle('active', active !== null && t.getAttribute('href') === '#' + active);
       });
     }
     window.addEventListener('scroll', updateActive, {passive: true});
