@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /thanks.html
+Disallow: /optout.html
 
 Sitemap: https://collegeessayman.com/sitemap.xml

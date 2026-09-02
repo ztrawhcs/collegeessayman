@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analytics opt-out — College Essay Man</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --navy: #1c2b4a; --accent: #e8640c; --accent-dark: #c4530a;
+      --gold: #f5a623; --good: #2e9e5b; --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Georgia, 'Times New Roman', serif; background: var(--navy);
+      color: #fff; line-height: 1.7; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem;
+    }
+    .card { max-width: 520px; width: 100%; text-align: center; }
+    .eyebrow {
+      font-family: var(--sans); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+    }
+    h1 { font-size: clamp(1.7rem, 6vw, 2.3rem); line-height: 1.2; margin-bottom: 1rem; }
+    p { font-family: var(--sans); font-size: 1rem; color: rgba(255,255,255,0.8); margin-bottom: 1rem; }
+    .status {
+      font-family: var(--sans); font-weight: 700; font-size: 1.05rem;
+      padding: 1rem 1.2rem; border-radius: 6px; margin: 1.6rem 0;
+      border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06);
+    }
+    .status.off { border-color: var(--good); color: #8ce8ae; }
+    .status.on  { border-color: var(--gold); color: var(--gold); }
+    button {
+      font-family: var(--sans); font-weight: 700; font-size: 1rem; cursor: pointer;
+      padding: 0.85rem 1.8rem; border-radius: 4px; border: none;
+      background: var(--accent); color: #fff; transition: background 0.15s;
+    }
+    button:hover { background: var(--accent-dark); }
+    button.secondary { background: transparent; border: 1px solid rgba(255,255,255,0.35); }
+    .fine { font-family: var(--sans); font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 1.8rem; }
+    .fine a { color: rgba(255,255,255,0.8); }
+    code { font-family: ui-monospace, Menlo, monospace; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p class="eyebrow">Owner tools</p>
+    <h1>Analytics opt-out</h1>
+    <p>
+      This hides <strong>this browser, on this device</strong> from the site's analytics and from the
+      visit alerts. Open this page once on your phone, your laptop, the Mac mini and your iPad.
+    </p>
+
+    <div class="status" id="status">Checking…</div>
+
+    <button id="toggle">…</button>
+
+    <p class="fine" id="detail"></p>
+    <p class="fine">
+      Stored as <code>cem-optout</code> in this browser's local storage. Clearing site data or using a
+      private window resets it. Nothing is sent anywhere &mdash; the setting only ever lives on this device.<br />
+      <a href="/">&larr; Back to collegeessayman.com</a>
+    </p>
+  </div>
+
+<script>
+  var KEY = "cem-optout";
+  var statusEl = document.getElementById("status");
+  var btn = document.getElementById("toggle");
+  var detail = document.getElementById("detail");
+
+  function readFlag() {
+    try { return localStorage.getItem(KEY) === "1"; } catch (e) { return null; }
+  }
+
+  function render() {
+    var out = readFlag();
+    if (out === null) {
+      statusEl.className = "status on";
+      statusEl.textContent = "Local storage is blocked in this browser";
+      btn.style.display = "none";
+      detail.textContent = "Opting out needs local storage. This is usually a private window or a blocked-cookies setting.";
+      return;
+    }
+    if (out) {
+      statusEl.className = "status off";
+      statusEl.textContent = "✓ This device is EXCLUDED";
+      btn.textContent = "Start counting this device again";
+      btn.className = "secondary";
+      detail.textContent = "Your visits will not appear in Cloudflare, in Clarity, or in the iMessage alerts.";
+    } else {
+      statusEl.className = "status on";
+      statusEl.textContent = "This device is being counted";
+      btn.textContent = "Exclude this device";
+      btn.className = "";
+      detail.textContent = "Visits from this browser currently show up in the analytics and trigger an alert.";
+    }
+  }
+
+  btn.addEventListener("click", function () {
+    try {
+      if (readFlag()) { localStorage.removeItem(KEY); }
+      else { localStorage.setItem(KEY, "1"); }
+    } catch (e) { /* nothing to do */ }
+    render();
+  });
+
+  // ?optout=1 sets it without a click, so the link can be texted to a device.
+  if (/[?&]optout=1/.test(location.search)) {
+    try { localStorage.setItem(KEY, "1"); } catch (e) {}
+  }
+  render();
+</script>
+</body>
+</html>
