@@ -710,6 +710,58 @@
       text-align: center;
     }
 
+    /* ── PRICING ── */
+    .pricing-section { background: #fff; border-top: 1px solid var(--border); }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.8rem;
+      margin-top: 2.5rem;
+    }
+    .pricing-card {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 2rem 1.8rem;
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--navy);
+    }
+    .pricing-card.featured {
+      background: var(--accent-light);
+      border-top: 3px solid var(--accent);
+    }
+    .pricing-badge {
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .pricing-card h3 {
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+    .pricing-price {
+      display: block;
+      font-family: var(--sans);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.8rem;
+    }
+    .pricing-card p { font-size: 0.9rem; }
+    .pricing-note {
+      margin-top: 2rem;
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
     /* ── FAQ ── */
     .faq-section { background: var(--light); }
     .faq-list {
@@ -1049,6 +1101,10 @@
       .testimonial { padding: 1.4rem; }
       .testimonial p { font-size: 1rem; }
 
+      /* Pricing */
+      .pricing-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+      .pricing-card { padding: 1.4rem; }
+
       /* FAQ */
       .faq-q { padding: 1.2rem 1.25rem; font-size: 1rem; }
       .faq-a { padding: 0 1.25rem 1.2rem; font-size: 0.97rem; }
@@ -1078,6 +1134,7 @@
       <a class="nav-link" href="#about">About Matt</a>
       <a class="nav-link" href="#videos">TikToks</a>
       <a class="nav-link" href="#testimonials">Reviews</a>
+      <a class="nav-link" href="#pricing">Pricing</a>
       <a class="nav-cta" href="#contact">Schedule a Free Consultation</a>
     </div>
   </div>
@@ -1089,6 +1146,7 @@
   <a class="section-tab" href="#videos">TikToks</a>
   <a class="section-tab" href="#about">About</a>
   <a class="section-tab" href="#testimonials">Reviews</a>
+  <a class="section-tab" href="#pricing">Pricing</a>
   <a class="section-tab" href="#faq">FAQ</a>
   <a class="section-tab" href="#contact">Book</a>
 </div>
@@ -1439,6 +1497,42 @@
   </div>
 </section>
 
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-inner">
+    <p class="section-label">Pricing</p>
+    <h2>Packages, not hours.</h2>
+    <p>Every engagement starts with a diagnostic session, not a blank invoice.</p>
+
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Idea Session</h3>
+        <span class="pricing-price">$450</span>
+        <p>Ninety minutes. We go through everything you have and everything you haven't thought of, find the one idea that's actually yours, and leave with a working outline. If you move forward within two weeks, the full $450 comes off your package.</p>
+      </div>
+      <div class="pricing-card">
+        <span class="pricing-badge">Most popular</span>
+        <h3>Personal Statement Package</h3>
+        <span class="pricing-price">Starting at $1,500</span>
+        <p>The Idea Session, up to three rounds of written feedback, and a final working session. Your Common App essay, finished.</p>
+      </div>
+      <div class="pricing-card">
+        <h3>Supplements Bundle</h3>
+        <span class="pricing-price">Starting at $1,200</span>
+        <p>Up to six supplemental essays — strategy, structure, two rounds of feedback on each.</p>
+      </div>
+      <div class="pricing-card featured">
+        <span class="pricing-badge">Full cycle</span>
+        <h3>Full Application Package</h3>
+        <span class="pricing-price">Starting at $2,750</span>
+        <p>Personal statement, up to eight supplements, and feedback on everything through January 1st.</p>
+      </div>
+    </div>
+
+    <p class="pricing-note">Contact Matt for rush timelines and multi-student pricing.</p>
+  </div>
+</section>
+
 <!-- FAQ — placed immediately before final CTA to intercept objections -->
 <section class="faq-section" id="faq">
   <div class="section-inner">
@@ -1453,7 +1547,7 @@
           <span class="faq-arrow">&#9660;</span>
         </button>
         <div class="faq-a" style="display:none;">
-          <p>Matt offers a free initial consultation — a brief phone call to talk through the process and see if working together is a fit. After that, working sessions are $200 an hour — less than most essay consultants — and most students finish their main essay in 2 to 4 sessions. You're working one-on-one with a nationally recognized journalist and Georgetown Law graduate.</p>
+          <p>Matt offers a free initial phone call to talk through the process and see if working together is a fit. After that, work is sold as packages rather than by the hour — personal statement packages start at $1,500, see the Pricing section above for the full menu. You're working one-on-one with a nationally recognized journalist and Georgetown Law graduate.</p>
           <p>Most students Matt has worked with have gotten into one of their top choice schools. Admissions officers have said publicly for years that the personal essay is often the deciding factor between two otherwise similar applicants.</p>
           <p>Sessions happen over FaceTime, Zoom, or Google Meet. If you're in the Washington, DC area, in-person sessions are available too.</p>
         </div>
