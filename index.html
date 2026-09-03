@@ -1367,31 +1367,24 @@
       cf.setAttribute("data-cf-beacon", '{"token": "eebdc72670fe4a028d88caeca6dd30a8"}');
       document.head.appendChild(cf);
 
-      // Region tagging. Neither Cloudflare Web Analytics nor Clarity records a
-      // US state - Cloudflare stops at country, and Clarity's dimensions are
-      // Browser / Device / Country / OS / Source / Medium / Campaign / Channel
-      // / URL. For a practice whose customers are mostly Fairfax County
-      // parents, "Virginia" vs "Oregon" is the difference between a referral
-      // and a stranger, so it is worth one lookup.
-      //
-      // Result is attached to the Clarity session as custom tags, filterable in
-      // the Clarity dashboard. Never blocks page render, and never runs for a
-      // device that has opted out, because that returns above.
+      // Region tagging via our own Cloudflare Worker. `request.cf` gives the
+      // Worker the city, region, postal code and carrier at the edge, so the
+      // visitor's IP never leaves Cloudflare - unlike the third-party lookup
+      // this replaced. The Worker stores the visit, the Mac mini reads it, and
+      // the iMessage alert says "McLean, Virginia" instead of "US".
       try {
-        fetch("https://get.geojs.io/v1/ip/geo.json", { mode: "cors" })
-          .then(function (r) { return r.ok ? r.json() : null; })
-          .then(function (g) {
-            if (!g || !window.clarity) return;
-            if (g.region) window.clarity("set", "region", String(g.region));
-            if (g.city) window.clarity("set", "city", String(g.city));
-            if (g.country) window.clarity("set", "geo_country", String(g.country));
-            if (g.region && g.city) {
-              window.clarity("set", "place", g.city + ", " + g.region);
-            }
-            window.__cemGeo = g;
-          })
-          .catch(function () { /* offline, blocked, or rate-limited: skip */ });
-      } catch (e) { /* no fetch: skip */ }
+        var payload = JSON.stringify({
+          path: location.pathname,
+          ref: document.referrer || ""
+        });
+        var beacon = "https://collegeessayman-geo.matthew-s-schwartz.workers.dev/v";
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon(beacon, new Blob([payload], { type: "text/plain" }));
+        } else {
+          fetch(beacon, { method: "POST", body: payload, keepalive: true, mode: "cors" })
+            .catch(function () { /* offline or blocked: skip */ });
+        }
+      } catch (e) { /* no beacon support: skip */ }
     })();
   </script>
 </head>
