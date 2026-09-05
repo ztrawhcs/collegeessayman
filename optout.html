@@ -5,15 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Analytics opt-out — College Essay Man</title>
   <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --navy: #1c2b4a; --accent: #e8640c; --accent-dark: #c4530a;
-      --gold: #f5a623; --good: #2e9e5b; --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --navy: #efe7d7; --accent: #7b2233; --accent-dark: #5d1926;
+      --gold: #9a6a2f; --good: #4a7c59; --sans: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: Georgia, 'Times New Roman', serif; background: var(--navy);
-      color: #fff; line-height: 1.7; min-height: 100vh;
+      font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif; background: var(--navy);
+      color: var(--ink); line-height: 1.7; min-height: 100vh;
       display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem;
     }
     .card { max-width: 520px; width: 100%; text-align: center; }
@@ -22,11 +25,11 @@
       letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
     }
     h1 { font-size: clamp(1.7rem, 6vw, 2.3rem); line-height: 1.2; margin-bottom: 1rem; }
-    p { font-family: var(--sans); font-size: 1rem; color: rgba(255,255,255,0.8); margin-bottom: 1rem; }
+    p { font-family: var(--sans); font-size: 1rem; color: rgba(51,48,44,0.8); margin-bottom: 1rem; }
     .status {
       font-family: var(--sans); font-weight: 700; font-size: 1.05rem;
       padding: 1rem 1.2rem; border-radius: 6px; margin: 1.6rem 0;
-      border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(51,48,44,0.18); background: rgba(51,48,44,0.06);
     }
     .status.off { border-color: var(--good); color: #8ce8ae; }
     .status.on  { border-color: var(--gold); color: var(--gold); }
@@ -36,9 +39,9 @@
       background: var(--accent); color: #fff; transition: background 0.15s;
     }
     button:hover { background: var(--accent-dark); }
-    button.secondary { background: transparent; border: 1px solid rgba(255,255,255,0.35); }
-    .fine { font-family: var(--sans); font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 1.8rem; }
-    .fine a { color: rgba(255,255,255,0.8); }
+    button.secondary { background: transparent; border: 1px solid rgba(51,48,44,0.35); }
+    .fine { font-family: var(--sans); font-size: 0.85rem; color: rgba(51,48,44,0.5); margin-top: 1.8rem; }
+    .fine a { color: rgba(51,48,44,0.8); }
     code { font-family: ui-monospace, Menlo, monospace; font-size: 0.9em; }
   </style>
 </head>
