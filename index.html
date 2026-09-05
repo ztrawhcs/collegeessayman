@@ -2,9 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>College Essay Man — Stand Out When Everyone Sounds the Same</title>
   <meta name="description" content="College and graduate school essay consulting with a decade+ of experience. In an era when AI is writing everyone's essays, your real voice is the most powerful thing you have." />
@@ -104,6 +101,46 @@
     ]
   }
   </script>
+  <script>
+    /* Night theme. Decided by the visitor's own sunset, not their clock:
+       the geo Worker reads request.cf at Cloudflare's edge and returns today's
+       sunrise/sunset for their location. We cache those two timestamps for 12
+       hours and compare locally, so only the first visit costs a round trip
+       and no visit ever flashes the wrong palette. */
+    (function () {
+      var KEY = "cem-sun", root = document.documentElement;
+      function apply(sunrise, sunset) {
+        var now = Date.now();
+        var night = now < Date.parse(sunrise) || now >= Date.parse(sunset);
+        if (night) root.setAttribute("data-theme", "night");
+        else root.removeAttribute("data-theme");
+      }
+      var cached = null;
+      try { cached = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
+      if (cached && cached.sunrise && cached.sunset &&
+          Date.now() - cached.at < 12 * 3600 * 1000) {
+        apply(cached.sunrise, cached.sunset);
+        return;
+      }
+      try {
+        fetch("https://collegeessayman-geo.matthew-s-schwartz.workers.dev/theme")
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) {
+            if (!d) return;
+            if (d.sunrise && d.sunset) {
+              try {
+                localStorage.setItem(KEY, JSON.stringify(
+                  { sunrise: d.sunrise, sunset: d.sunset, at: Date.now() }));
+              } catch (e) {}
+              apply(d.sunrise, d.sunset);
+            } else if (d.night) {
+              root.setAttribute("data-theme", "night");
+            }
+          })
+          .catch(function () { /* offline or blocked: stay light */ });
+      } catch (e) { /* no fetch: stay light */ }
+    })();
+  </script>
   <style>
     :root {
       /* Typewriter palette, Sep 4 2026. Variable NAMES are deliberately
@@ -123,14 +160,46 @@
       --gold: #9a6a2f;             /* aged brass, for eyebrows */
       --border: #ddd0b6;
       --max: 820px;
-      --sans: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --panel-ink: 51, 48, 44;     /* rgb of --ink, for the alpha overlays */
     }
+
+    /* ── NIGHT ──
+       Applied when the visitor's own location is past civil twilight, decided
+       by the geo Worker from request.cf and cached in localStorage so repeat
+       visits paint instantly with no flash.
+
+       Every value below is a redefinition of a variable that already exists,
+       which is why one block re-skins the whole site. --panel-ink is the
+       important one: 38 rgba() overlays are written against it, and on a dark
+       ground they have to be light rather than dark. */
+    :root[data-theme="night"] {
+      --ink: #ece4d6;
+      --muted: #a9a096;
+      --light: #211f22;            /* page ground */
+      --accent: #c04a5e;           /* maroon, lifted for contrast on dark */
+      --accent-dark: #a63a4d;
+      --accent-light: #2b2226;     /* was a pale tint; now a dark one */
+      --navy: #2a272b;             /* panel ground */
+      --navy-light: #322e33;
+      --gold: #d9a25c;
+      --border: #443f45;
+      --heading: #f0c9a8;
+      --panel-ink: 236, 228, 214;  /* overlays go light on a dark ground */
+    }
+    :root[data-theme="night"] body { background: var(--light); }
+    :root[data-theme="night"] .hero-photo img,
+    :root[data-theme="night"] .about-photo img { filter: brightness(0.88); }
+    :root[data-theme="night"] .faq-item,
+    :root[data-theme="night"] .testimonial,
+    :root[data-theme="night"] .pricing-card,
+    :root[data-theme="night"] .problem-card { background: var(--navy-light); }
+
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Libre Baskerville', Georgia, 'Times New Roman', serif;
+      font-family: Georgia, 'Times New Roman', serif;
       color: var(--ink);
       background: var(--light);
       line-height: 1.7;
