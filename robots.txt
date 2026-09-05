@@ -3,4 +3,4 @@ Allow: /
 Disallow: /thanks.html
 Disallow: /optout.html
 
-Sitemap: https://collegeessayman.com/sitemap.xml
+Sitemap: https://schwartzessaystudio.com/sitemap.xml
