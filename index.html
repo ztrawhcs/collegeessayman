@@ -65,6 +65,8 @@
           "description": "The Idea Session plus working sessions and written feedback until the personal statement is finished. Up to six sessions included." },
         { "@type": "Offer", "name": "Additional Personal Statement", "price": "900", "priceCurrency": "USD",
           "description": "A second full-length essay on a different story, for a program running its own application." },
+        { "@type": "Offer", "name": "Written Diagnostic", "price": "150", "priceCurrency": "USD",
+          "description": "A one-page written verdict on a draft you already have: whether the topic is worth pursuing, what it is actually about, and what would need to change. Returned within three days and credited in full toward any package within 14 days." },
         { "@type": "Offer", "name": "Supplements", "price": "1500", "priceCurrency": "USD",
           "description": "Up to six core supplemental essays, adapted across every school on the applicant's list, with up to four working sessions. Covers why-us, why-major, identity, activity, short-answer, portfolio and design statements." },
         { "@type": "Offer", "name": "Full Application Package", "price": "2750", "priceCurrency": "USD",
@@ -162,6 +164,59 @@
       --max: 820px;
       --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --panel-ink: 51, 48, 44;     /* rgb of --ink, for the alpha overlays */
+    }
+
+
+    /* ── ALREADY HAVE A DRAFT + SUBSCRIBE ── */
+    .draft-band {
+      background: var(--navy);
+      border-top: 3px solid var(--accent);
+      padding: 3rem 1.5rem;
+    }
+    .draft-inner {
+      max-width: var(--max); margin: 0 auto;
+      display: grid; grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 2.5rem; align-items: center;
+    }
+    .draft-inner h2 { font-size: 1.7rem; color: var(--heading); margin-bottom: 0.7rem; }
+    .draft-inner p { font-family: var(--sans); font-size: 1rem; color: var(--muted); }
+    .draft-price {
+      background: var(--light); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1.5rem; text-align: center;
+    }
+    .draft-price .amt {
+      font-family: var(--sans); font-size: 2.4rem; font-weight: 800;
+      color: var(--accent); line-height: 1; display: block;
+    }
+    .draft-price .what {
+      font-family: var(--sans); font-size: 0.85rem; color: var(--muted);
+      margin: 0.5rem 0 1rem; display: block;
+    }
+    .subscribe-band { background: var(--light); padding: 3rem 1.5rem; }
+    .subscribe-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+    .subscribe-inner h2 { font-size: 1.5rem; color: var(--heading); margin-bottom: 0.6rem; }
+    .subscribe-inner p { font-family: var(--sans); font-size: 0.98rem; color: var(--muted); margin-bottom: 1.4rem; }
+    .subscribe-form { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+    .subscribe-form input {
+      font-family: var(--sans); font-size: 1rem; padding: 0.8rem 1rem;
+      border: 1px solid var(--border); border-radius: 4px; min-width: 260px;
+      background: #fff; color: #1a1a1a;
+    }
+    :root[data-theme="night"] .subscribe-form input { background: var(--navy-light); color: var(--ink); }
+    .subscribe-form button {
+      font-family: var(--sans); font-weight: 700; font-size: 1rem; cursor: pointer;
+      padding: 0.8rem 1.6rem; border: none; border-radius: 4px;
+      background: var(--accent); color: #fff;
+    }
+    .subscribe-form button:hover { background: var(--accent-dark); }
+    .subscribe-msg {
+      font-family: var(--sans); font-size: 0.92rem; margin-top: 0.9rem; min-height: 1.2em;
+    }
+    .subscribe-fine { font-family: var(--sans); font-size: 0.8rem; color: var(--muted); margin-top: 1rem; }
+    @media (max-width: 639px) {
+      .draft-inner { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; }
+      .subscribe-form input { min-width: 0; width: 100%; }
+      .subscribe-form button { width: 100%; }
     }
 
     /* ── NIGHT ──
@@ -2017,6 +2072,49 @@
 </section>
 
 <!-- CONTACT / CTA -->
+<!-- ALREADY HAVE A DRAFT -->
+<div class="draft-band">
+  <div class="draft-inner">
+    <div>
+      <p class="section-label">Already written something?</p>
+      <h2>Send me the draft. I'll tell you whether it's the right one.</h2>
+      <p>
+        The most expensive mistake in this process is spending six weeks polishing the wrong essay.
+        If you already have a draft, I'll read it and write you a straight answer &mdash; is this topic
+        worth the next six weeks, what is it actually about, and what would have to change. One page,
+        back within three days. No session, no commitment, no sales call.
+      </p>
+    </div>
+    <div class="draft-price">
+      <span class="amt">$150</span>
+      <span class="what">Written diagnostic<br />on one draft</span>
+      <a class="btn-primary" href="#contact" style="display:inline-block;font-size:0.9rem;padding:0.7rem 1.4rem;">Send a draft</a>
+      <p style="font-family:var(--sans);font-size:0.75rem;color:var(--muted);margin-top:0.9rem;">
+        Credited in full toward any package within 14 days.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- NEXT CYCLE LIST -->
+<div class="subscribe-band">
+  <div class="subscribe-inner">
+    <h2>Applying next year?</h2>
+    <p>
+      September through November books up, and every year I turn away families I would have liked to
+      work with. Leave your email and I'll write to you once, in June, when the following cycle opens
+      &mdash; early bookings get 20 percent off, and June is when a personal statement should actually
+      be written.
+    </p>
+    <form class="subscribe-form" id="subscribe-form">
+      <input type="email" id="subscribe-email" placeholder="you@example.com" required aria-label="Email address" />
+      <button type="submit" id="subscribe-btn">Notify me in June</button>
+    </form>
+    <p class="subscribe-msg" id="subscribe-msg"></p>
+    <p class="subscribe-fine">One email a year. No newsletter, no forwarding your address to anyone.</p>
+  </div>
+</div>
+
 <section class="contact-section" id="contact">
   <div class="section-inner">
     <p class="section-label">Get started</p>
@@ -2091,6 +2189,44 @@
     }
     window.addEventListener('scroll', updateActive, {passive: true});
     updateActive();
+  })();
+
+(function () {
+    var form = document.getElementById("subscribe-form");
+    if (!form) return;
+    var msg = document.getElementById("subscribe-msg");
+    var btn = document.getElementById("subscribe-btn");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = document.getElementById("subscribe-email").value.trim();
+      if (!email) return;
+      btn.disabled = true; btn.textContent = "Sending\u2026";
+      msg.style.color = "var(--muted)"; msg.textContent = "";
+      fetch("https://collegeessayman-geo.matthew-s-schwartz.workers.dev/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, source: "site-footer" })
+      })
+        .then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); })
+        .then(function (d) {
+          if (d && d.ok) {
+            msg.style.color = "var(--accent)";
+            msg.textContent = d.already
+              ? "You're already on the list \u2014 I'll be in touch in June."
+              : "Got it. I'll write to you in June.";
+            form.style.display = "none";
+          } else {
+            msg.style.color = "var(--accent)";
+            msg.textContent = "That address didn't look right \u2014 try again?";
+            btn.disabled = false; btn.textContent = "Notify me in June";
+          }
+        })
+        .catch(function () {
+          msg.style.color = "var(--accent)";
+          msg.textContent = "Couldn't reach the server. Email matthew.s.schwartz@gmail.com instead.";
+          btn.disabled = false; btn.textContent = "Notify me in June";
+        });
+    });
   })();
 
   function toggleFaq(btn) {
