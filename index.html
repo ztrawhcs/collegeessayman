@@ -534,6 +534,11 @@
       color: rgba(var(--panel-ink),0.9);
       font-style: normal;
     }
+    .hero-quote-hook { display: block; font-size: 1.6rem; line-height: 1.25; font-style: normal;
+      font-weight: 600; color: var(--heading); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+    .hero-quote-proof { display: block; }
+    .hero-mini-testimonial cite { display: block; margin-top: 0.6rem; font-style: normal;
+      color: rgba(var(--panel-ink),0.9); font-size: 0.92rem; }
 
     /* ── SECTION COMMON ── */
     section { padding: 4.5rem 1.5rem; }
@@ -1384,6 +1389,7 @@
         font-size: 1.05rem;
       }
       .hero-mini-testimonial { font-size: 0.9rem; margin-top: 1.4rem; line-height: 1.6; }
+      .hero-quote-hook { font-size: 1.3rem; }
 
       /* Sections */
       section { padding: 3rem 1.25rem; }
@@ -1582,9 +1588,11 @@
   <hr class="hero-rule" />
 
   <!-- Single powerful social nudge directly under CTAs -->
-  <p class="hero-mini-testimonial">
-    "Matt is a godsend. From a single meeting he was able to extract a story that best represented me. That simple change resulted in more acceptances than expected and many large scholarships." — <strong style="white-space: nowrap">David H., Alexandria VA · Yelp ★★★★★</strong>
-  </p>
+  <blockquote class="hero-mini-testimonial">
+      <span class="hero-quote-hook">“Matt is a godsend.”</span>
+      <span class="hero-quote-proof">From a single meeting he was able to extract a story that best represented me. That simple change resulted in more acceptances than expected and many large scholarships.</span>
+      <cite>— David H., Alexandria VA · Yelp ★★★★★</cite>
+    </blockquote>
   </div>
 
   <figure class="hero-photo">
