@@ -110,43 +110,28 @@
   }
   </script>
   <script>
-    /* Night theme. Decided by the visitor's own sunset, not their clock:
-       the geo Worker reads request.cf at Cloudflare's edge and returns today's
-       sunrise/sunset for their location. We cache those two timestamps for 12
-       hours and compare locally, so only the first visit costs a round trip
-       and no visit ever flashes the wrong palette. */
+    /* Night theme follows the visitor's own system setting.
+
+       This used to ask a Cloudflare Worker for the visitor's sunset, computed
+       from their IP. It was clever and it was wrong: it needed a network round
+       trip before the page could pick a palette, it broke whenever the Worker
+       route moved, it ignored what the reader had actually chosen, and it
+       inferred location from an IP address to answer a question the browser
+       already knows the answer to.
+
+       prefers-color-scheme is instant, offline, private, and correct. It also
+       updates live when the reader flips their system theme. */
     (function () {
-      var KEY = "cem-sun", root = document.documentElement;
-      function apply(sunrise, sunset) {
-        var now = Date.now();
-        var night = now < Date.parse(sunrise) || now >= Date.parse(sunset);
-        if (night) root.setAttribute("data-theme", "night");
+      var root = document.documentElement;
+      var mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+      if (!mq) return;                       // very old browser: stay light
+      function apply(dark) {
+        if (dark) root.setAttribute("data-theme", "night");
         else root.removeAttribute("data-theme");
       }
-      var cached = null;
-      try { cached = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
-      if (cached && cached.sunrise && cached.sunset &&
-          Date.now() - cached.at < 12 * 3600 * 1000) {
-        apply(cached.sunrise, cached.sunset);
-        return;
-      }
-      try {
-        fetch("https://collegeessayman-geo.matthew-s-schwartz.workers.dev/theme")
-          .then(function (r) { return r.ok ? r.json() : null; })
-          .then(function (d) {
-            if (!d) return;
-            if (d.sunrise && d.sunset) {
-              try {
-                localStorage.setItem(KEY, JSON.stringify(
-                  { sunrise: d.sunrise, sunset: d.sunset, at: Date.now() }));
-              } catch (e) {}
-              apply(d.sunrise, d.sunset);
-            } else if (d.night) {
-              root.setAttribute("data-theme", "night");
-            }
-          })
-          .catch(function () { /* offline or blocked: stay light */ });
-      } catch (e) { /* no fetch: stay light */ }
+      apply(mq.matches);
+      if (mq.addEventListener) mq.addEventListener("change", function (e) { apply(e.matches); });
+      else if (mq.addListener) mq.addListener(function (e) { apply(e.matches); });
     })();
   </script>
   <style>
