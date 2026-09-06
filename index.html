@@ -155,6 +155,8 @@
       --max: 820px;
       --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --panel-ink: 51, 48, 44;     /* rgb of --ink, for the alpha overlays */
+        --paper: #fff;               /* section ground for the white bands */
+        --surface: #fff;             /* raised card sitting on a section */
     }
 
 
@@ -232,6 +234,8 @@
       --border: #443f45;
       --heading: #f0c9a8;
       --panel-ink: 236, 228, 214;  /* overlays go light on a dark ground */
+        --paper: #1a181b;            /* darker than --light so bands still alternate */
+        --surface: #262329;          /* a card reads as raised, not as a hole */
     }
     :root[data-theme="night"] body { background: var(--light); }
     :root[data-theme="night"] .hero-photo img,
