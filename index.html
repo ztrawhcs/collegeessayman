@@ -121,6 +121,12 @@
        updates live when the reader flips their system theme. */
     (function () {
       var root = document.documentElement;
+      // The retired sunset script cached sunrise/sunset in localStorage for 12
+      // hours and applied "night" from that cache with no network call. A
+      // browser holding a stale copy of this page could therefore sit in dark
+      // mode all through the following morning. Clear the legacy key so the
+      // old state can never outlive the old code.
+      try { localStorage.removeItem("cem-sun"); } catch (e) {}
       var mq = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
       if (!mq) return;                       // very old browser: stay light
       function apply(dark) {
@@ -798,6 +804,8 @@
       font-size: 0.9rem;
       color: rgba(var(--panel-ink),0.8);
     }
+    .about-credentials a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+    .about-credentials a:hover { color: var(--accent); }
     .about-credentials li::before {
       content: "\2713";
       color: var(--gold);
@@ -1662,7 +1670,7 @@
         </p>
 
         <ul class="about-credentials">
-          <li>Bloomberg Law journalist and podcaster &mdash; narrative reporting, previously NPR (<a href="https://schwartzreports.org/" target="_blank" rel="noopener">portfolio and awards</a>)</li>
+          <li>Bloomberg Law <a href="https://schwartzreports.org/" target="_blank" rel="noopener">journalist and podcaster</a> &mdash; narrative reporting, previously NPR</li>
           <li>Georgetown University Law Center &mdash; J.D.</li>
           <li>American Bar Association Silver Gavel Award for Media and the Arts</li>
           <li>Edward R. Murrow Award for best feature reporting</li>
