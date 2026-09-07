@@ -1,9 +1,8 @@
 User-agent: *
 Allow: /
 
-# No Disallow lines. Nothing links to /optout.html or /thanks.html, so no
-# crawler finds them on its own — but a Disallow line publishes the path to
-# anyone who reads this file, and scanners read it precisely to find the pages
-# a site is trying to hide. Listing them here advertised them.
+# Deliberately no Disallow lines: a Disallow is a public list of the paths a
+# site would rather not have found, and scanners read this file to get exactly
+# that. Unlinked pages are better left unmentioned here.
 
 Sitemap: https://schwartzessaystudio.com/sitemap.xml
