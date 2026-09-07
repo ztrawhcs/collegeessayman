@@ -62,15 +62,7 @@
     .fine a { color: rgba(51,48,44,0.8); }
   </style>
   <script>
-  /* Owner opt-out gate. Must run BEFORE any beacon.
-     localStorage alone was not enough: it is per-ORIGIN, so the opt-out Matt set
-     on collegeessayman.com never applied once the site moved to
-     schwartzessaystudio.com, and his iPhone and Mac mini went back to being
-     counted. Safari also clears script-written storage after 7 days of no visits.
-     So: two stores that heal each other, and a URL that arms any device in one tap.
-       https://schwartzessaystudio.com/?optout=1   arm
-       https://schwartzessaystudio.com/?optout=0   disarm
-     Both domains must be armed separately - different origins, different storage. */
+  /* Owner device gate. Must run before any beacon. */
   window.CEM_OPTOUT = (function () {
     var KEY = "cem-optout", DAYS = 400;
     function ck(v) {
@@ -104,11 +96,7 @@
     return on;
   })();
   </script>
-  <!-- Analytics loader.
-       Both tags are injected at runtime and are skipped entirely on any device
-       that has opted out at /optout.html. Cloudflare Web Analytics stores no IP
-       address, so owner traffic cannot be filtered after the fact server-side -
-       it has to be suppressed at the source, per device. -->
+  <!-- Analytics loader. Skipped entirely on excluded devices. -->
   <script>
     (function () {
       if (window.CEM_OPTOUT) {
