@@ -57,7 +57,7 @@
 
     <p class="fine" id="detail"></p>
     <p class="fine">
-      Stored as <code>cem-optout</code> in this browser's local storage. Clearing site data or using a
+      Stored as <code>cem-optout</code> in this browser's local storage AND as a cookie, so a Safari storage purge does not quietly put this device back into the numbers. Each domain is separate — arm collegeessayman.com too if you open it. Clearing site data or using a
       private window resets it. Nothing is sent anywhere &mdash; the setting only ever lives on this device.<br />
       <a href="/">&larr; Back to schwartzessaystudio.com</a>
     </p>
@@ -69,17 +69,44 @@
   var btn = document.getElementById("toggle");
   var detail = document.getElementById("detail");
 
+  var DAYS = 400;
+  function readCk() {
+    try {
+      var m = document.cookie.match(/(?:^|;\s*)cem-optout=([^;]*)/);
+      return m ? m[1] : null;
+    } catch (e) { return null; }
+  }
+  function setBoth() {
+    var ok = false;
+    try { localStorage.setItem(KEY, "1"); ok = true; } catch (e) {}
+    try {
+      document.cookie = KEY + "=1;path=/;max-age=" + (DAYS * 86400) + ";samesite=lax";
+      ok = ok || readCk() === "1";
+    } catch (e) {}
+    return ok;
+  }
+  function clearBoth() {
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    try { document.cookie = KEY + "=;path=/;max-age=0"; } catch (e) {}
+  }
+  // Either store counts. localStorage alone is per-origin and Safari purges it
+  // after ~7 idle days, which is how Matt's iPhone and Mac mini quietly went
+  // back into the numbers after the move to schwartzessaystudio.com.
   function readFlag() {
-    try { return localStorage.getItem(KEY) === "1"; } catch (e) { return null; }
+    var ls = null;
+    try { ls = localStorage.getItem(KEY); } catch (e) { ls = undefined; }
+    var ck = readCk();
+    if (ls === undefined && ck === null) return null;   // both stores unavailable
+    return ls === "1" || ck === "1";
   }
 
   function render() {
     var out = readFlag();
     if (out === null) {
       statusEl.className = "status on";
-      statusEl.textContent = "Local storage is blocked in this browser";
+      statusEl.textContent = "Storage is blocked in this browser";
       btn.style.display = "none";
-      detail.textContent = "Opting out needs local storage. This is usually a private window or a blocked-cookies setting.";
+      detail.textContent = "Opting out needs local storage or cookies. This is usually a private window or a blocked-cookies setting.";
       return;
     }
     if (out) {
@@ -98,17 +125,13 @@
   }
 
   btn.addEventListener("click", function () {
-    try {
-      if (readFlag()) { localStorage.removeItem(KEY); }
-      else { localStorage.setItem(KEY, "1"); }
-    } catch (e) { /* nothing to do */ }
+    if (readFlag()) { clearBoth(); } else { setBoth(); }
     render();
   });
 
   // ?optout=1 sets it without a click, so the link can be texted to a device.
-  if (/[?&]optout=1/.test(location.search)) {
-    try { localStorage.setItem(KEY, "1"); } catch (e) {}
-  }
+  if (/[?&]optout=1/.test(location.search)) { setBoth(); }
+  if (/[?&]optout=0/.test(location.search)) { clearBoth(); }
   render();
 </script>
 </body>

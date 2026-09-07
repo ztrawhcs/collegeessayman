@@ -1480,6 +1480,49 @@
       section + .tiktok-inline-wrap { border-top: 3px solid var(--border); }
     }
   </style>
+  <script>
+  /* Owner opt-out gate. Must run BEFORE any beacon.
+     localStorage alone was not enough: it is per-ORIGIN, so the opt-out Matt set
+     on collegeessayman.com never applied once the site moved to
+     schwartzessaystudio.com, and his iPhone and Mac mini went back to being
+     counted. Safari also clears script-written storage after 7 days of no visits.
+     So: two stores that heal each other, and a URL that arms any device in one tap.
+       https://schwartzessaystudio.com/?optout=1   arm
+       https://schwartzessaystudio.com/?optout=0   disarm
+     Both domains must be armed separately - different origins, different storage. */
+  window.CEM_OPTOUT = (function () {
+    var KEY = "cem-optout", DAYS = 400;
+    function ck(v) {
+      try {
+        document.cookie = KEY + "=" + v + ";path=/;max-age=" + (DAYS * 86400) + ";samesite=lax";
+      } catch (e) {}
+    }
+    function readCk() {
+      try {
+        var m = document.cookie.match(/(?:^|;\s*)cem-optout=([^;]*)/);
+        return m ? m[1] : null;
+      } catch (e) { return null; }
+    }
+    function readLs() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+    function writeLs(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+    function clearAll() {
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      try { document.cookie = KEY + "=;path=/;max-age=0"; } catch (e) {}
+    }
+
+    /* 1. An explicit ?optout= in the URL always wins. */
+    var q = null;
+    try { q = new URLSearchParams(location.search).get("optout"); } catch (e) {}
+    if (q === "1" || q === "on" || q === "true") { writeLs("1"); ck("1"); return true; }
+    if (q === "0" || q === "off" || q === "false") { clearAll(); return false; }
+
+    /* 2. Otherwise either store counts, and each repairs the other - so a Safari
+          storage purge does not silently put a device back into the numbers. */
+    var on = readLs() === "1" || readCk() === "1";
+    if (on) { writeLs("1"); ck("1"); }   /* re-stamp: pushes the expiry out on every visit */
+    return on;
+  })();
+  </script>
   <!-- Analytics loader.
        Both tags are injected at runtime and are skipped entirely on any device
        that has opted out at /optout.html. Cloudflare Web Analytics stores no IP
@@ -1487,12 +1530,10 @@
        it has to be suppressed at the source, per device. -->
   <script>
     (function () {
-      try {
-        if (localStorage.getItem("cem-optout") === "1") {
-          window.__cemAnalytics = "opted-out";
-          return;
-        }
-      } catch (e) { /* private mode: fall through and load normally */ }
+      if (window.CEM_OPTOUT) {
+        window.__cemAnalytics = "opted-out";
+        return;
+      }
       window.__cemAnalytics = "loading";
 
       // Microsoft Clarity
