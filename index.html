@@ -697,6 +697,49 @@
 
     /* ── SECTION COMMON ── */
     section { padding: 4.5rem 1.5rem; }
+    /* ── WHAT I WORK ON / WHERE ── the two link grids that surface the
+       eight sub-pages. They were footer-only and effectively invisible. */
+    .works-section { background: var(--paper); }
+    .works-section h2 { color: var(--heading); }
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: 0.9rem;
+      margin: 1.4rem 0 2.6rem;
+    }
+    .works-card {
+      display: block;
+      padding: 1.05rem 1.2rem;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 3px;
+      background: var(--light);
+      text-decoration: none;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .works-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(var(--panel-ink), 0.10);
+    }
+    .works-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1.02rem;
+      margin-bottom: 0.2rem;
+    }
+    .works-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.87rem;
+      line-height: 1.45;
+    }
+    .works-sub {
+      font-weight: 700;
+      color: var(--heading);
+      margin: 0 0 0.2rem;
+      font-size: 1.05rem;
+    }
+
     .section-inner {
       max-width: var(--max);
       margin: 0 auto;
@@ -1715,6 +1758,7 @@
     <a class="nav-logo" href="#">Schwartz Essay Studio</a>
     <div class="nav-links">
       <a class="nav-link" href="#about">About Matt</a>
+      <a class="nav-link" href="#what-i-work-on">What I Work On</a>
       <a class="nav-link" href="#videos">TikToks</a>
       <a class="nav-link" href="#testimonials">Reviews</a>
       <a class="nav-link" href="#pricing">Pricing</a>
@@ -1727,6 +1771,7 @@
 <div class="section-tabs" id="section-tabs">
   <a class="section-tab" href="#about">About Matt</a>
   <a class="section-tab" href="#the-ai-question">Why It Matters</a>
+  <a class="section-tab" href="#what-i-work-on">What I Work On</a>
   <a class="section-tab" href="#videos">TikToks</a>
   <a class="section-tab" href="#testimonials">Reviews</a>
   <a class="section-tab" href="#pricing">Pricing</a>
@@ -2084,6 +2129,60 @@
 </div>
 
 <!-- TESTIMONIALS -->
+<section class="works-section" id="what-i-work-on">
+  <div class="section-inner">
+    <p class="section-label">What I work on</p>
+    <h2>Not just college applications.</h2>
+    <p>
+      The Common App essay is the biggest part of what I do, but it is not all of it. If an application
+      asks for a personal statement, the work is the same &mdash; and the price is the same too. There is
+      no separate graduate rate.
+    </p>
+
+    <p class="works-sub">By application</p>
+    <div class="works-grid">
+      <a class="works-card" href="/law-school">
+        <strong>Law school</strong>
+        <span>Two pages, usually standing alone. I have a Georgetown J.D. and cover the courts for a living.</span>
+      </a>
+      <a class="works-card" href="/mba">
+        <strong>MBA &amp; business school</strong>
+        <span>Short essays, several per school, all answering one question the numbers cannot.</span>
+      </a>
+      <a class="works-card" href="/medical-school">
+        <strong>Medical school</strong>
+        <span>5,300 characters to answer why medicine, plus the secondaries nobody budgets for.</span>
+      </a>
+      <a class="works-card" href="/transfer">
+        <strong>Transfer</strong>
+        <span>Leaving without sounding bitter, arriving without sounding vague. I transferred myself.</span>
+      </a>
+      <a class="works-card" href="/graduate">
+        <strong>Graduate &amp; professional</strong>
+        <span>Fellowships, scholarships, statements of purpose, and the ones with no category.</span>
+      </a>
+    </div>
+
+    <p class="works-sub">Where I work</p>
+    <div class="works-grid">
+      <a class="works-card" href="/northern-virginia">
+        <strong>Northern Virginia</strong>
+        <span>Vienna, McLean, Oakton, Tysons, Arlington, Alexandria, Fairfax. In person, if you want it.</span>
+      </a>
+      <a class="works-card" href="/washington-dc">
+        <strong>Washington, DC</strong>
+        <span>I reported in this city for years. I know how a DC application reads from the outside.</span>
+      </a>
+      <a class="works-card" href="/maryland">
+        <strong>Maryland</strong>
+        <span>Bethesda, Potomac, Chevy Chase, Rockville, Silver Spring.</span>
+      </a>
+    </div>
+
+    <p>And online with families anywhere in the United States.</p>
+  </div>
+</section>
+
 <section class="testimonials-section" id="testimonials">
   <div class="section-inner">
     <p class="section-label">What students &amp; families say</p>
