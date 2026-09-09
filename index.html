@@ -2451,6 +2451,18 @@
       <input type="hidden" name="_subject" value="New inquiry — Schwartz Essay Studio" />
       <input type="hidden" name="_next" value="https://schwartzessaystudio.com/thanks.html" />
       <input type="hidden" name="_captcha" value="false" />
+      <!-- Spam controls. _honey is FormSubmit's honeypot: bots fill every field
+           they find, so a submission arriving with it non-empty is discarded
+           before it reaches the inbox. A real person cannot fill it — it is
+           display:none and outside the tab order.
+           _blacklist holds only strings a genuine parent would never send:
+           the Sep 8 2026 junk submission's address (both dot-variants Gmail
+           treats as the same account) and BBCode link markup. Deliberately no
+           topic words and no "http" — a real inquiry can mention crypto or
+           paste a Google Doc link, and a blocked lead costs far more than a
+           spam email that lands. -->
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <input type="hidden" name="_blacklist" value="pra.nabses1@gmail.com,pra.n.a.b.ses1@gmail.com,nabses,[url=,[/url]" />
       <input type="text" name="name" placeholder="Your name" required />
       <input type="email" name="email" placeholder="Email address" required />
       <input type="tel" name="phone" placeholder="Phone number (optional)" />
