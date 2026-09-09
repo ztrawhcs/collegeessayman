@@ -124,18 +124,62 @@
       // visitor's IP never leaves Cloudflare - unlike the third-party lookup
       // this replaced. The Worker stores the visit, the Mac mini reads it, and
       // the iMessage alert says "McLean, Virginia" instead of "US".
+      //
+      // Two things about this call are deliberate.
+      //
+      // 1. The host is geo.schwartzessaystudio.com, not the Worker's workers.dev
+      //    URL. That makes it SAME-SITE with the page, so Safari's tracking
+      //    prevention treats it as first-party. Measured over the Worker's
+      //    72-hour retention window on Sep 9 2026, the old cross-site call was
+      //    recording 94% of desktop visits but only 41% of mobile ones, so most
+      //    phone visitors reached the alerts as a bare "US" with no city.
+      //
+      // 2. fetch() is tried BEFORE sendBeacon, which is the reverse of the
+      //    obvious order. sendBeacon is fire-and-forget: it cannot report that a
+      //    visit was dropped, so a failure is simply lost. fetch(keepalive)
+      //    survives the page the same way but resolves, so a failure can fall
+      //    back and, if that also fails, be retried at pagehide.
+      //
+      // `sent` guarantees at most one row per page load.
       try {
+        var BEACON = "https://geo.schwartzessaystudio.com/v";
         var payload = JSON.stringify({
           path: location.pathname,
           ref: document.referrer || ""
         });
-        var beacon = "https://collegeessayman-geo.matthew-s-schwartz.workers.dev/v";
-        if (navigator.sendBeacon) {
-          navigator.sendBeacon(beacon, new Blob([payload], { type: "text/plain" }));
+        var sent = false;
+
+        var viaBeacon = function () {
+          try {
+            return !!(navigator.sendBeacon &&
+              navigator.sendBeacon(BEACON, new Blob([payload], { type: "text/plain" })));
+          } catch (e) { return false; }
+        };
+
+        if (!window.fetch) {
+          sent = viaBeacon();
         } else {
-          fetch(beacon, { method: "POST", body: payload, keepalive: true, mode: "cors" })
-            .catch(function () { /* offline or blocked: skip */ });
+          sent = true;
+          try {
+            fetch(BEACON, {
+              method: "POST",
+              body: payload,
+              keepalive: true,
+              mode: "cors",
+              // text/plain is CORS-safelisted, so this costs no preflight.
+              headers: { "Content-Type": "text/plain" }
+            })
+              .then(function (r) { if (!r || !r.ok) { sent = viaBeacon(); } })
+              .catch(function () { sent = viaBeacon(); });
+          } catch (e) { sent = viaBeacon(); }
         }
+
+        // Last chance. A phone that suspends the page mid-flight is the usual
+        // reason nothing confirmed; pagehide is the final moment it can still
+        // send anything at all.
+        addEventListener("pagehide", function () {
+          if (!sent) { viaBeacon(); }
+        }, { once: true });
       } catch (e) { /* no beacon support: skip */ }
     })();
   </script>
