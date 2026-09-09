@@ -1295,6 +1295,30 @@
       text-align: center;
     }
 
+    /* ── Inline links in body copy ──
+       There was no global <a> rule at all, so an unstyled inline link fell back to
+       the browser default blue: 1.65-1.88:1 against the dark grounds, effectively
+       invisible. (Reported on "A written diagnostic is $150" in the pricing note.)
+       Maroon reads 9.9:1 on white, but only 3.2-3.7:1 on the dark ground, so night
+       mode switches to the gold at 6.8-7.8:1. Underlined in both, so the link does
+       not depend on color alone to be recognisable.
+       :not([style]) leaves the deliberately-muted /law-school, /maryland etc. links
+       alone - those carry an inline color and are meant to stay quiet. */
+    p a:not([style]),
+    li a:not([style]) {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.15em;
+    }
+    p a:not([style]):hover,
+    li a:not([style]):hover { color: var(--accent-dark); }
+
+    :root[data-theme="night"] p a:not([style]),
+    :root[data-theme="night"] li a:not([style]) { color: var(--gold); }
+    :root[data-theme="night"] p a:not([style]):hover,
+    :root[data-theme="night"] li a:not([style]):hover { color: var(--heading); }
+
     /* ── FAQ ── */
     .faq-section { background: var(--light); }
     .faq-list {
