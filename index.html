@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>College Essay Coach — Northern Virginia, DC &amp; Maryland | Schwartz Essay Studio</title>
-  <meta name="description" content="College and graduate school essay coaching in Northern Virginia, Washington DC and Maryland, and online with students anywhere in the country. In an era when AI is writing everyone's essays, your real voice is the most powerful thing you have." />
+  <meta name="description" content="College and graduate school essay coaching in Vienna VA and across Northern Virginia, Washington DC and Maryland, and online with students anywhere in the country. In an era when AI is writing everyone's essays, your real voice is the most powerful thing you have." />
   <link rel="canonical" href="https://schwartzessaystudio.com/" />
 
   <!-- Open Graph / link previews. This site is shared parent-to-parent by text
@@ -1319,6 +1319,56 @@
     :root[data-theme="night"] p a:not([style]):hover,
     :root[data-theme="night"] li a:not([style]):hover { color: var(--heading); }
 
+    /* ── Call / text, offered as a real alternative to the form ──
+       The number had been sitting in small print BELOW the form, so the only
+       visible way to reach Matt was to fill something in. Parents of seniors
+       under a deadline text. */
+    .reach-direct {
+      margin: 0 0 2rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      text-align: left;
+    }
+    .reach-direct .reach-lead {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.35rem;
+    }
+    .reach-direct .reach-number {
+      margin: 0;
+      font-size: 1.5rem;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+    .reach-direct .reach-number a {
+      color: var(--heading);
+      text-decoration: none;
+      border-bottom: 2px solid var(--accent);
+    }
+    .reach-direct .reach-number a:hover { border-bottom-color: var(--heading); }
+    .reach-direct .reach-note {
+      margin: 0.5rem 0 0;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .hero-phone {
+      margin: 0.85rem 0 0;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    .hero-phone a { color: var(--heading); text-decoration: none;
+                    border-bottom: 1px solid var(--accent); }
+    @media (max-width: 600px) {
+      .reach-direct .reach-number { font-size: 1.3rem; }
+    }
+
     /* ── FAQ ── */
     .faq-section { background: var(--light); }
     .faq-list {
@@ -1853,6 +1903,7 @@
   <h1>Tell the one story<br /><em>only you can tell.</em></h1>
   <p class="hero-sub">
     Now that AI makes everyone's essay sound the same, the students who get in are the ones who sound unmistakably like themselves. That's the work we do together.
+    Based in Vienna, Virginia, working online with students anywhere in the country.
   </p>
 
   <hr class="hero-rule" />
@@ -1881,6 +1932,10 @@
     <a class="btn-primary" href="#contact">Schedule a Free Intro Call</a>
     <a class="btn-secondary" href="#the-ai-question">Why this matters now &#8594;</a>
   </div>
+
+  <p class="hero-phone">
+    Or just call or text Matt: <a href="tel:+12028105338">(202) 810-5338</a>
+  </p>
 
   <hr class="hero-rule" />
 
@@ -2488,8 +2543,19 @@
     <p class="section-label">Get started</p>
     <h2>Let's figure out what your essay is actually about.</h2>
     <p>
-      Matt offers a free ten-minute intro call — a quick call with a parent to hear where your student is in the process and answer any questions. Send a message below, email directly, or call or text anytime.
+      Matt offers a free ten-minute intro call — a quick call with a parent to hear where your student is in the process and answer any questions.
     </p>
+
+    <div class="reach-direct">
+      <p class="reach-lead">Call or text</p>
+      <p class="reach-number"><a href="tel:+12028105338">(202) 810-5338</a></p>
+      <p class="reach-note">
+        Texting is usually fastest, and it reaches Matt directly &mdash; not an
+        assistant or a booking service. You can also email
+        <a href="mailto:matt@schwartzessaystudio.com">matt@schwartzessaystudio.com</a>,
+        or use the form below if you would rather write it all out.
+      </p>
+    </div>
 
     <form class="contact-form" action="https://formsubmit.co/matthew.s.schwartz@gmail.com" method="POST">
       <input type="hidden" name="_subject" value="New inquiry — Schwartz Essay Studio" />
